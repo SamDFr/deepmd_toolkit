@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+.ipynb_checkpoints/
+
+data_preparation/outputs/
+model_analysis/outputs/
+data_preparation/input/*
+!data_preparation/input/.gitkeep
+model_analysis/input/*
+!model_analysis/input/.gitkeep
+model_analysis/training_res/*
+!model_analysis/training_res/.gitkeep

@@ -9,3 +9,4 @@ data_preparation/input/*
 model_analysis/input/*
 !model_analysis/input/.gitkeep
 !model_analysis/input/lcurve.out
+scripts/generate_clean_notebooks.py

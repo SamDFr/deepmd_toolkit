@@ -8,5 +8,4 @@ data_preparation/input/*
 !data_preparation/input/.gitkeep
 model_analysis/input/*
 !model_analysis/input/.gitkeep
-model_analysis/training_res/*
-!model_analysis/training_res/.gitkeep
+!model_analysis/input/lcurve.out

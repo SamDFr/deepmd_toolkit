@@ -53,10 +53,9 @@ deepmd_toolkit/
 ├── model_analysis/
 │   ├── input/
 │   │   └── your_validation_set.traj
+│   │   └── lcurve.out
 │   ├── model/
 │   │   └── graph.pb
-│   └── training_res/
-│       └── lcurve.out
 └── README.md
 ```
 

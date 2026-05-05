@@ -25,7 +25,7 @@ Run these notebooks from the DeepMD Python environment.
 
 - a frozen DeepMD model file such as `graph.pb`
 - one or more labelled ASE trajectories in `model_analysis/input/`
-- a DeepMD `lcurve.out` file for training analysis
+- a DeepMD `lcurve.out` file in `model_analysis/input/` for training analysis
 
 ## Usage notes
 

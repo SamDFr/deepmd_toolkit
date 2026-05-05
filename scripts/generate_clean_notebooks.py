@@ -806,7 +806,7 @@ def build_training_notebook() -> list[dict]:
             """
             PROJECT_ROOT = Path.cwd().resolve().parent if Path.cwd().name == "model_analysis" else Path.cwd().resolve()
 
-            LCURVE_FILE = PROJECT_ROOT / "model_analysis" / "training_res" / "lcurve.out"
+            LCURVE_FILE = PROJECT_ROOT / "model_analysis" / "input" / "lcurve.out"
             SUMMARY_WINDOW = 5
 
             print(f"lcurve file: {LCURVE_FILE}")

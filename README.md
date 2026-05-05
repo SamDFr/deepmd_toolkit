@@ -4,6 +4,21 @@ Small notebook-based utilities for preparing datasets and analysing DeePMD model
 
 Use the DeepMD Python environment for all notebooks in this repository. The notebooks assume `deepmd-kit` and its related scientific Python stack are already available in the active environment.
 
+## Get The Code
+
+Clone the repository with:
+
+```bash
+git clone https://github.com/SamDFr/deepmd_toolkit.git
+cd deepmd_toolkit
+```
+
+After cloning:
+
+1. Activate your `deepmd-kit` Python environment.
+2. Start Jupyter from that environment.
+3. Add your input files in the directories described below.
+
 ## Repository layout
 
 - [data_preparation/dpdata.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/data_preparation/dpdata.ipynb): convert an ASE trajectory into DeepMD `raw` and `npy` datasets with `dpdata`

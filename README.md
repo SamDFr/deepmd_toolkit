@@ -20,6 +20,18 @@ Use the DeepMD Python environment for all notebooks in this repository. The note
 5. Use `model_analysis/dp_correlation_plots.ipynb` to visualise the agreement in the notebook and export summary metrics.
 6. Use `model_analysis/dp_training_analysis.ipynb` to inspect the training curve.
 
+## Requirements
+
+Use the `deepmd-kit` Python environment for this repository.
+
+The expected workflow is:
+
+1. Activate your `deepmd-kit` environment.
+2. Start Jupyter from that environment.
+3. Run the notebooks from the activated environment.
+
+This repository does not provide a separate `requirements.txt`, because the intended setup is the existing `deepmd-kit` environment used for DeePMD work.
+
 ## Environment
 
 The notebooks assume a Python environment with at least:

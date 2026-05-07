@@ -3,6 +3,7 @@
 The notebook in this directory is for converting an ASE-readable labelled trajectory into DeepMD dataset formats.
 
 Run it from the DeepMD Python environment.
+If needed, install the notebook dependencies from the repository root with `pip install -r requirements.txt` after activating that environment.
 
 ## Notebook
 

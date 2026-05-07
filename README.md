@@ -16,8 +16,9 @@ cd deepmd_toolkit
 After cloning:
 
 1. Activate your `deepmd-kit` Python environment.
-2. Start Jupyter from that environment.
-3. Add your input files in the directories described below.
+2. Install or refresh the notebook dependencies with `pip install -r requirements.txt`.
+3. Start Jupyter from that environment.
+4. Add your input files in the directories described below.
 
 ## Repository layout
 
@@ -42,10 +43,20 @@ Use the `deepmd-kit` Python environment for this repository.
 The expected workflow is:
 
 1. Activate your `deepmd-kit` environment.
-2. Start Jupyter from that environment.
-3. Run the notebooks from the activated environment.
+2. Install or refresh the notebook dependencies with `pip install -r requirements.txt`.
+3. Start Jupyter from that environment.
+4. Run the notebooks from the activated environment.
 
-This repository does not provide a separate `requirements.txt`, because the intended setup is the existing `deepmd-kit` environment used for DeePMD work.
+This repository provides a minimal [requirements.txt](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/requirements.txt) describing the notebook dependencies.
+Install it into your existing `deepmd-kit` environment rather than treating it as a replacement for the full DeepMD setup.
+
+Example:
+
+```bash
+conda activate deepmd
+pip install -r requirements.txt
+jupyter lab
+```
 
 ## Environment
 

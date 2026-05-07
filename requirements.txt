@@ -1,0 +1,11 @@
+# Install these into the existing DeepMD Python environment used for the notebooks.
+# `deepmd-kit` supplies the `deepmd` Python package imported by the analysis notebooks.
+
+deepmd-kit
+ase
+dpdata
+numpy
+pandas
+matplotlib
+tqdm
+jupyter

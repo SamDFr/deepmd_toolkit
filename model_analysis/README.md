@@ -2,8 +2,8 @@
 
 This directory contains notebooks for evaluating a frozen DeepMD model and inspecting training quality.
 
-Run these notebooks from the DeepMD Python environment.
-If needed, install the notebook dependencies from the repository root with `pip install -r requirements.txt` after activating that environment.
+Run these notebooks from a Python environment that has the repository root dependencies installed with `pip install -r requirements.txt`.
+These notebooks do require `deepmd-kit`.
 
 ## Notebooks
 

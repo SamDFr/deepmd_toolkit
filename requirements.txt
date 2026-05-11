@@ -1,5 +1,8 @@
-# Install these into the existing DeepMD Python environment used for the notebooks.
-# `deepmd-kit` supplies the `deepmd` Python package imported by the analysis notebooks.
+# Full repository requirements.
+# `deepmd-kit` is needed for the DeepMD-specific notebooks in `data_preparation/`
+# and `model_analysis/`, but not for `lammps_md_preparation/` alone.
+# For the lighter LAMMPS-only workflow, use
+# `lammps_md_preparation/requirements.txt`.
 
 deepmd-kit
 ase

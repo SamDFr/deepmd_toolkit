@@ -1,0 +1,224 @@
+LAMMPS (29 Aug 2024)
+  using 1 OpenMP thread(s) per MPI task
+Loaded 1 plugins from /opt/deepmd-kit/lib/deepmd_lmp
+# Initialization
+units           metal
+atom_style      atomic
+boundary        p p m
+read_data       lmp_geo.txt
+Reading data file ...
+  triclinic box = (0 0 0) to (19.730928 17.087485 46.727274) with tilt (-9.8654638 0 0)
+WARNING: Triclinic box skew is large. LAMMPS will run inefficiently. (src/domain.cpp:221)
+  2 by 4 by 8 MPI processor grid
+  reading atoms ...
+  384 atoms
+  reading velocities ...
+  384 velocities
+  read_data CPU = 0.028 seconds
+
+# Atoms
+
+mass 1 14.0067
+mass 2 15.999
+mass 3 12.011
+
+# Define interatomic potential
+pair_style      deepmd graph.pb
+Summary of lammps deepmd module ...
+  >>> Info of deepmd-kit:
+  installed to:       /opt/deepmd-kit
+  source:             
+  source branch:      HEAD
+  source commit:      8b3dc08
+  source commit at:   2025-06-11 13:00:46 +0200
+  support model ver.: 1.1 
+  build variant:      cpu
+  build with tf inc:  /opt/deepmd-kit/lib/python3.12/site-packages/tensorflow/include;/opt/deepmd-kit/lib/python3.12/site-packages/tensorflow/../../../../include
+  build with tf lib:  /opt/deepmd-kit/lib/python3.12/site-packages/tensorflow/libtensorflow_cc.so.2
+  build with pt lib:  torch;torch_library;/opt/deepmd-kit/lib/python3.12/site-packages/torch/lib/libc10.so
+  set tf intra_op_parallelism_threads: 8
+  set tf inter_op_parallelism_threads: 1
+  >>> Info of lammps module:
+  use deepmd-kit at:  /opt/deepmd-kitpair_coeff      * *
+
+# Settings
+neighbor        2.0 bin
+neigh_modify    delay 0 every 1 check yes
+
+# Define compute
+#compute         myTemp all temp
+
+# Initialize velocities
+
+# Define fixes
+group frozen id 1:128
+128 atoms in group frozen
+fix freeze frozen setforce 0.0 0.0 0.0
+velocity frozen set 0 0 0
+
+
+# Define mobile atoms
+group mobile subtract all frozen
+256 atoms in group mobile
+
+# Temperature compute for mobile only (remove COM drift)
+compute Tmob mobile temp/com
+compute Tall all temp
+
+thermo_modify temp Tmob
+WARNING: Temperature for thermo pressure is not for group all (src/thermo.cpp:533)
+
+velocity         mobile create 50 11111 mom yes rot yes dist gaussian
+velocity         mobile scale 50 temp Tmob
+
+#velocity         all create 100 11111 mom yes rot no dist gaussian
+
+
+#fix             1 all nve
+timestep        0.0001
+fix             1 mobile nvt temp 50 50 $(200.0*dt)
+fix             1 mobile nvt temp 50 50 0.020000000000000000416
+fix_modify 1 temp Tmob
+WARNING: Temperature for fix modify is not for group all (src/fix_nh.cpp:1399)
+
+
+# Output settings
+thermo          10
+thermo_style    custom step temp c_Tmob pe ke etotal
+WARNING: New thermo_style command, previous thermo_modify settings will be lost (src/output.cpp:904)
+dump            10 all custom 10 traj_all.lammpstrj id type x y z vx vy vz fx fy fz
+
+
+# Run the simulation
+timestep        0.0001  # This sets the timestep to 0.1 fs
+run             200000
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Your simulation uses code contributions which should be cited:
+
+- Type Label Framework: https://doi.org/10.1021/acs.jpcb.3c08419
+
+@Article{Gissinger24,
+ author = {Jacob R. Gissinger, Ilia Nikiforov, Yaser Afshar, Brendon Waters, Moon-ki Choi, Daniel S. Karls, Alexander Stukowski, Wonpil Im, Hendrik Heinz, Axel Kohlmeyer, and Ellad B. Tadmor},
+ title = {Type Label Framework for Bonded Force Fields in LAMMPS},
+ journal = {J. Phys. Chem. B},
+ year =    2024,
+ volume =  128,
+ number =  13,
+ pages =   {3282–-3297}
+}
+
+- USER-DEEPMD package:
+
+@article{Wang_ComputPhysCommun_2018_v228_p178,
+  author = {Wang, Han and Zhang, Linfeng and Han, Jiequn and E, Weinan},
+  doi = {10.1016/j.cpc.2018.03.016},
+  url = {https://doi.org/10.1016/j.cpc.2018.03.016},
+  year = 2018,
+  month = {jul},
+  publisher = {Elsevier {BV}},
+  volume = 228,
+  journal = {Comput. Phys. Commun.},
+  title = {{DeePMD-kit: A deep learning package for many-body potential energy representation and molecular dynamics}},
+  pages = {178--184}
+}
+@article{Zeng_JChemPhys_2023_v159_p054801,
+  title  = {{DeePMD-kit v2: A software package for deep potential models}},
+  author =   {Jinzhe Zeng and Duo Zhang and Denghui Lu and Pinghui Mo and Zeyu Li
+         and Yixiao Chen and Mari{\'a}n Rynik and Li'ang Huang and Ziyao Li and 
+         Shaochen Shi and Yingze Wang and Haotian Ye and Ping Tuo and Jiabin
+         Yang and Ye Ding and Yifan Li and Davide Tisi and Qiyu Zeng and Han 
+         Bao and Yu Xia and Jiameng Huang and Koki Muraoka and Yibo Wang and 
+         Junhan Chang and Fengbo Yuan and Sigbj{\o}rn L{\o}land Bore and Chun
+         Cai and Yinnian Lin and Bo Wang and Jiayan Xu and Jia-Xin Zhu and 
+         Chenxing Luo and Yuzhi Zhang and Rhys E A Goodall and Wenshuo Liang
+         and Anurag Kumar Singh and Sikai Yao and Jingchao Zhang and Renata
+         Wentzcovitch and Jiequn Han and Jie Liu and Weile Jia and Darrin M
+         York and Weinan E and Roberto Car and Linfeng Zhang and Han Wang},
+  journal =  {J. Chem. Phys.},
+  volume =   159,
+  issue =    5,  
+  year =    2023,
+  pages  =   054801,
+  doi =      {10.1063/5.0155600},
+}
+@Article{Zeng_JChemTheoryComput_2025_v21_p4375,
+  author =   {Jinzhe Zeng and Duo Zhang and Anyang Peng and Xiangyu Zhang and Sensen
+             He and Yan Wang and Xinzijian Liu and Hangrui Bi and Yifan Li and Chun
+             Cai and Chengqian Zhang and Yiming Du and Jia-Xin Zhu and Pinghui Mo
+             and Zhengtao Huang and Qiyu Zeng and Shaochen Shi and Xuejian Qin and
+             Zhaoxi Yu and Chenxing Luo and Ye Ding and Yun-Pei Liu and Ruosong Shi
+             and Zhenyu Wang and Sigbj{\o}rn L{\o}land Bore and Junhan Chang and
+             Zhe Deng and Zhaohan Ding and Siyuan Han and Wanrun Jiang and Guolin
+             Ke and Zhaoqing Liu and Denghui Lu and Koki Muraoka and Hananeh Oliaei
+             and Anurag Kumar Singh and Haohui Que and Weihong Xu and Zhangmancang
+             Xu and Yong-Bin Zhuang and Jiayu Dai and Timothy J. Giese and Weile
+             Jia and Ben Xu and Darrin M. York and Linfeng Zhang and Han Wang},
+    title =    {{DeePMD-kit v3: A Multiple-Backend Framework for Machine Learning
+             Potentials}},
+  journal =  {J. Chem. Theory Comput.},
+  year =     2025,
+  volume =   21,
+  number =   9,
+  pages =    {4375--4385},
+  doi =      {10.1021/acs.jctc.5c00340},
+}
+
+CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE-CITE
+
+Generated 0 of 3 mixed pair_coeff terms from geometric mixing rule
+Neighbor list info ...
+  update: every = 1 steps, delay = 0 steps, check = yes
+  max neighbors/atom: 2000, page size: 100000
+  master list distance cutoff = 7.5
+  ghost atom cutoff = 7.5
+  binsize = 3.75, bins = 8 5 13
+  1 neighbor lists, perpetual/occasional/extra = 1 0 0
+  (1) pair deepmd, perpetual
+      attributes: full, newton on
+      pair build: full/bin/atomonly
+      stencil: full/bin/3d
+      bin: standard
+Per MPI rank memory allocation (min/avg/max) = 2.95 | 2.992 | 3.104 Mbytes
+   Step          Temp          c_Tmob         PotEng         KinEng         TotEng    
+         0   33.289817      50            -3605.2498      1.6480668     -3603.6018    
+        10   32.103362      48.21799      -3605.1911      1.5893294     -3603.6017    
+        20   28.827275      43.297436     -3605.0285      1.4271414     -3603.6014    
+        30   24.231518      36.394789     -3604.7998      1.1996209     -3603.6002    
+        40   19.355689      29.071486     -3604.5559      0.95823506    -3603.5977    
+        50   15.225856      22.868639     -3604.3478      0.75378092    -3603.594     
+        60   12.591328      18.911681     -3604.2125      0.6233543     -3603.5891    
+        70   11.752102      17.651196     -3604.1649      0.58180704    -3603.5831    
+        80   12.515078      18.797156     -3604.1948      0.61957942    -3603.5752    
+        90   14.280988      21.449483     -3604.272       0.70700368    -3603.565     
+
+Loop time of 4585.78 on 64 procs for 200000 steps with 384 atoms
+
+Performance: 0.377 ns/day, 63.691 hours/ns, 43.613 timesteps/s, 16.747 katom-step/s
+139.5% CPU use with 64 MPI tasks x 1 OpenMP threads
+
+MPI task timing breakdown:
+Section |  min time  |  avg time  |  max time  |%varavg| %total
+---------------------------------------------------------------
+Pair    | 5.1393     | 948.63     | 4254.7     |5305.1 | 20.69
+Neigh   | 0          | 0          | 0          |   0.0 |  0.00
+Comm    | 0.41241    | 198.3      | 1317       |2548.0 |  4.32
+Output  | 5.9168     | 12.341     | 18.102     | 108.0 |  0.27
+Modify  | 10.649     | 3418.5     | 4559.8     |3364.6 | 74.54
+Other   |            | 8.05       |            |       |  0.18
+
+Nlocal:              6 ave          29 max           0 min
+Histogram: 48 0 0 0 0 0 1 6 8 1
+Nghost:          241.5 ave         574 max           0 min
+Histogram: 32 0 0 0 0 0 16 0 0 16
+Neighs:              0 ave           0 max           0 min
+Histogram: 64 0 0 0 0 0 0 0 0 0
+FullNghs:          896 ave        4441 max           0 min
+Histogram: 48 0 0 0 0 0 2 7 6 1
+
+Total # of neighbors = 57344
+Ave neighs/atom = 149.33333
+Neighbor list builds = 0
+Dangerous builds = 0
+Total wall time: 1:16:28

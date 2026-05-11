@@ -8,7 +8,7 @@ Small notebook-based utilities for:
 
 The repository no longer requires you to reuse a pre-existing DeepMD environment.
 You can install the repository requirements into a dedicated virtual environment.
-Only the DeepMD-specific notebooks require `deepmd-kit`; the `lammps_md_preparation/` workflows do not from code inspection.
+Only the DeepMD-specific notebooks require `deepmd-kit`; the `lammps_md_preparation/` workflows do not, based on code inspection.
 
 ## Get The Code
 
@@ -32,7 +32,6 @@ Example with a dedicated virtual environment:
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-jupyter lab
 ```
 
 ## Repository layout

@@ -10,5 +10,15 @@ data_preparation/input/*
 !data_preparation/input/.gitkeep
 model_analysis/input/*
 !model_analysis/input/.gitkeep
+!model_analysis/input/TEST_selected.traj
 !model_analysis/input/lcurve.out
+!model_analysis/input/lcurve.001.out
+!model_analysis/input/lcurve.002.out
+!model_analysis/input/lcurve.003.out
+!model_analysis/input/lcurve.004.out
+model_analysis/model/*
+!model_analysis/model/graph.001.pb
+!model_analysis/model/graph.002.pb
+!model_analysis/model/graph.003.pb
+!model_analysis/model/graph.004.pb
 scripts/generate_clean_notebooks.py

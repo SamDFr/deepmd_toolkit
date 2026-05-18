@@ -37,19 +37,19 @@ pip install -r requirements.txt
 ## Repository layout
 
 - [data_preparation/dpdata.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/data_preparation/dpdata.ipynb): convert an ASE trajectory into DeepMD `raw` and `npy` datasets with `dpdata`
-- [model_analysis/dp_inference.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/dp_inference.ipynb): run a frozen DeepMD model on a labelled trajectory and export DFT vs DeepMD comparisons
-- [model_analysis/dp_correlation_plots.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/dp_correlation_plots.ipynb): inspect parity plots and force-angle differences in the notebook, then export summary statistics
-- [model_analysis/dp_training_analysis.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/dp_training_analysis.ipynb): inspect `lcurve.out` learning curves from training
+- [model_analysis/01_dp_training_analysis.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/01_dp_training_analysis.ipynb): inspect `lcurve` learning curves matched to your frozen models
+- [model_analysis/02_dp_inference.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/02_dp_inference.ipynb): run one or more frozen DeepMD models on a labelled trajectory and export DFT vs DeepMD comparisons
+- [model_analysis/03_dp_correlation_plots.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/03_dp_correlation_plots.ipynb): inspect parity plots, force magnitude, and force-angle differences in panel form, then export summary statistics
 - [lammps_md_preparation/README.md](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/README.md): notebook workflows and helpers for preparing LAMMPS inputs, analysing thermalisation, and exporting `possur` / `velsur`
 
 ## Expected workflow
 
 1. Prepare a labelled dataset in ASE trajectory format.
 2. Use `data_preparation/dpdata.ipynb` to export DeepMD-ready data.
-3. Train or select a frozen DeepMD model (`graph.pb`).
-4. Use `model_analysis/dp_inference.ipynb` to compare model predictions against reference data from `model_analysis/input/`.
-5. Use `model_analysis/dp_correlation_plots.ipynb` to visualise the agreement in the notebook and export summary metrics.
-6. Use `model_analysis/dp_training_analysis.ipynb` to inspect the training curve.
+3. Train or select one or more frozen DeepMD models such as `graph.001.pb`.
+4. Use `model_analysis/01_dp_training_analysis.ipynb` to inspect the matching `lcurve` files.
+5. Use `model_analysis/02_dp_inference.ipynb` to compare model predictions against reference data from `model_analysis/input/`.
+6. Use `model_analysis/03_dp_correlation_plots.ipynb` to visualise the agreement in the notebook and export summary metrics.
 7. Use `lammps_md_preparation/` when you need to generate LAMMPS-ready structures or derive trajectory exports for external MD workflows.
 
 ## Requirements
@@ -87,7 +87,7 @@ These notebooks were rewritten to avoid hard-coded absolute paths. Each notebook
 
 ## Suggested local data layout
 
-This repository does not ship trajectory or training-curve data. A simple layout that matches the default notebook configuration is:
+This repository now ships a few small example inputs for the notebook defaults. A simple layout that matches the current default configuration is:
 
 ```text
 deepmd_toolkit/
@@ -97,16 +97,27 @@ deepmd_toolkit/
 ├── lammps_md_preparation/
 │   ├── input/
 │   │   ├── POSCAR_Unit_Cell
-│   │   ├── log.lammps
-│   │   └── traj.lammpstrj
+│   │   ├── poscars/
+│   │   │   └── POSCAR-1
+│   │   ├── lammps/
+│   │   │   ├── 50K_log.lammps
+│   │   │   └── 50K_traj_all.lammpstrj
+│   │   └── vasprun/
+│   │       └── vasprun-1_full.xml
 │   └── output/
 ├── model_analysis/
 │   ├── input/
-│   │   └── your_validation_set.traj
-│   │   └── lcurve.out
+│   │   ├── TEST_selected.traj
+│   │   ├── lcurve.001.out
+│   │   ├── lcurve.002.out
+│   │   ├── lcurve.003.out
+│   │   └── lcurve.004.out
 │   ├── model/
-│   │   └── graph.pb
+│   │   ├── graph.001.pb
+│   │   ├── graph.002.pb
+│   │   ├── graph.003.pb
+│   │   └── graph.004.pb
 └── README.md
 ```
 
-Put your files in these directories and select them with the configuration cells. If your files live elsewhere, edit the configuration cells instead of changing notebook logic.
+Treat these shipped files as examples. For your real calculations, put your own files in the same directories or edit the configuration cells instead of changing notebook logic.

@@ -4,20 +4,17 @@ This directory contains notebook workflows and reusable Python helpers for:
 
 - building slab supercells from POSCAR files
 - exporting LAMMPS data files from POSCAR batches
+- exporting a selected `vasprun.xml` snapshot to a LAMMPS data file with finite-difference velocities
 - analysing temperature evolution from `log.lammps`
 - extracting `possur` and `velsur` style files from LAMMPS trajectories
 
-## What was cleaned up
+## Layout
 
-The original notebooks contained several assumptions tied to one local study:
+The notebooks are intended to be configured through explicit variables near the top of each workflow.
+The reusable Python logic now lives in the dedicated internal package directory:
 
-- absolute paths under `/Users/samuel/...`
-- hard-coded dataset names such as `TS5`, `AL1`, `500K`
-- atom index ranges baked into the logic
-- an external `matplotlib` style file outside this repository
-- HOPG-specific atom type rewriting mixed directly into notebook cells
-
-The notebooks are now intended to be configured through explicit variables near the top of each workflow, and the reusable logic lives in [utils.py](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/utils.py).
+- [lammps_md_preparation/python/lammps_md_preparation/__init__.py](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/python/lammps_md_preparation/__init__.py)
+- [lammps_md_preparation/python/lammps_md_preparation/utils.py](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/python/lammps_md_preparation/utils.py)
 
 ## Environment
 
@@ -46,12 +43,18 @@ pip install -r lammps_md_preparation/requirements.txt
 
 - [HOPG_preparation.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/HOPG_preparation.ipynb): build a repeated slab, optionally remove the top layer, and export POSCAR plus LAMMPS data
 - [lammps_gen_from_POSCAR.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/lammps_gen_from_POSCAR.ipynb): convert a directory of POSCAR files into LAMMPS data files
+- [vasprun_snapshot_to_lammps.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/vasprun_snapshot_to_lammps.ipynb): extract one ionic step from a file in `input/vasprun/`, estimate velocities by finite differences, and export a LAMMPS data file
 - [thermalisation_analysis.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/thermalisation_analysis.ipynb): parse a LAMMPS log, compute summary statistics, and plot the temperature evolution
 - [get_POSSUR_VELSUR.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/get_POSSUR_VELSUR.ipynb): select trajectory frames and export `possur` and `velsur` files for downstream codes
 
 ## Usage guidance
 
 - Keep raw inputs outside the notebook code and point to them through the configuration cells.
+- Notebook paths are now resolved relative to `lammps_md_preparation/` whether you launch Jupyter from the repository root or from inside this subdirectory.
+- Default sample inputs currently follow this layout:
+  `input/POSCAR_Unit_Cell`, `input/poscars/`, `input/lammps/`, and `input/vasprun/`
+- The `vasprun_snapshot_to_lammps.ipynb` workflow searches `input/vasprun/` by default; use `VASPRUN_PATTERN` and `VASPRUN_INDEX` to choose among several XML files.
+- For `vasprun.xml` inputs, set `ION_TIMESTEP_FS` to the ionic MD timestep used in VASP; velocities are estimated from neighbouring frames and then converted by ASE when writing the LAMMPS data file.
 - When a downstream code requires zeroed positions or velocities for a subset of atoms, pass the relevant atom indices explicitly instead of editing helper logic.
 - `VELOCITY_SCALE` is a multiplicative unit-conversion factor applied before writing `velsur`. It is not the MD timestep by itself.
 - If your downstream code expects a displacement per step rather than a velocity, then you would multiply by the relevant timestep separately.

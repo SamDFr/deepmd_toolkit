@@ -6,6 +6,8 @@ __pycache__/
 data_preparation/outputs/
 model_analysis/outputs/
 lammps_md_preparation/output/
+lammps_md_preparation/input/vasprun/*
+!lammps_md_preparation/input/vasprun/vasprun-1_50frames.xml
 data_preparation/input/*
 !data_preparation/input/.gitkeep
 model_analysis/input/*

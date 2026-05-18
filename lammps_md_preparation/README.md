@@ -53,7 +53,7 @@ pip install -r lammps_md_preparation/requirements.txt
 - Notebook paths are now resolved relative to `lammps_md_preparation/` whether you launch Jupyter from the repository root or from inside this subdirectory.
 - Default sample inputs currently follow this layout:
   `input/POSCAR_Unit_Cell`, `input/poscars/`, `input/lammps/`, and `input/vasprun/`
-- The `vasprun_snapshot_to_lammps.ipynb` workflow searches `input/vasprun/` by default; use `VASPRUN_PATTERN` and `VASPRUN_INDEX` to choose among several XML files.
+- The `vasprun_snapshot_to_lammps.ipynb` workflow defaults to the reduced committed example file `input/vasprun/vasprun-1_50frames.xml`; use `VASPRUN_PATTERN` and `VASPRUN_INDEX` to choose another XML file when needed.
 - For `vasprun.xml` inputs, set `ION_TIMESTEP_FS` to the ionic MD timestep used in VASP; velocities are estimated from neighbouring frames and then converted by ASE when writing the LAMMPS data file.
 - When a downstream code requires zeroed positions or velocities for a subset of atoms, pass the relevant atom indices explicitly instead of editing helper logic.
 - `VELOCITY_SCALE` is a multiplicative unit-conversion factor applied before writing `velsur`. It is not the MD timestep by itself.

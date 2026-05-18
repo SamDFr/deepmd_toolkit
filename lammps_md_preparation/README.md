@@ -11,6 +11,7 @@ This directory contains notebook workflows and reusable Python helpers for:
 ## Layout
 
 The notebooks are intended to be configured through explicit variables near the top of each workflow.
+Non-obvious configuration variables are briefly documented inline in those configuration cells.
 The reusable Python logic now lives in the dedicated internal package directory:
 
 - [lammps_md_preparation/python/lammps_md_preparation/__init__.py](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/python/lammps_md_preparation/__init__.py)

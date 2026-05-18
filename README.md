@@ -42,6 +42,10 @@ pip install -r requirements.txt
 - [model_analysis/03_dp_correlation_plots.ipynb](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/model_analysis/03_dp_correlation_plots.ipynb): inspect parity plots, force magnitude, and force-angle differences in panel form, then export summary statistics
 - [lammps_md_preparation/README.md](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/lammps_md_preparation/README.md): notebook workflows and helpers for preparing LAMMPS inputs, analysing thermalisation, and exporting `possur` / `velsur`
 
+## Internal Script
+
+- [scripts/generate_clean_notebooks.py](/Users/samuel/Desktop/postdoc_PhLAM/codes/deepmd_toolkit/scripts/generate_clean_notebooks.py): internal helper for regenerating some cleaned notebook templates; it is not the main user entry point, and several notebooks are now maintained directly in-repo rather than fully regenerated from this script
+
 ## Expected workflow
 
 1. Prepare a labelled dataset in ASE trajectory format.
@@ -85,6 +89,8 @@ These notebooks were rewritten to avoid hard-coded absolute paths. Each notebook
 - the output path for exported text files when a notebook writes them
 - the trajectory filters, atom index selections, and export options for LAMMPS preparation workflows
 
+Non-obvious configuration variables now include brief inline `# ...` comments directly in the notebook cells.
+
 ## Suggested local data layout
 
 This repository now ships a few small example inputs for the notebook defaults. A simple layout that matches the current default configuration is:
@@ -103,7 +109,7 @@ deepmd_toolkit/
 │   │   │   ├── 50K_log.lammps
 │   │   │   └── 50K_traj_all.lammpstrj
 │   │   └── vasprun/
-│   │       └── vasprun-1_full.xml
+│   │       └── vasprun-1_50frames.xml
 │   └── output/
 ├── model_analysis/
 │   ├── input/
